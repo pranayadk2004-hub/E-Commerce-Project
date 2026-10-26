@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaStore | Online Shopping</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark: #17251f;
+    --green: #246b4a;
+    --light: #f6f7f2;
+    --orange: #efb366;
+    --white: #ffffff;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+header {
+    background: var(--dark);
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: var(--orange);
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.cart-button, .primary-button {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.hero {
+    padding: 65px 7%;
+    background: #e4eee4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 54px);
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+.hero p {
+    margin-bottom: 23px;
+    color: #46544b;
+}
+
+.hero-art {
+    font-size: clamp(75px, 13vw, 150px);
+    text-align: center;
+}
+
+.section {
+    padding: 45px 7%;
+}
+
+.section h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.controls input, .controls select {
+    padding: 12px;
+    border: 1px solid #ccd5cc;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
+
+.controls input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e8e2;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-art {
+    background: #edf1e9;
+    min-height: 155px;
+    display: grid;
+    place-items: center;
+    font-size: 75px;
+}
+
+.product-info {
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1;
+}
+
+.category {
+    font-size: 12px;
+    color: var(--green);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product .primary-button {
+    margin-top: auto;
+    width: 100%;
+}
+
+.cart-panel {
+    background: white;
+    border: 1px solid #dce4da;
+    border-radius: 12px;
+    padding: 22px;
+    margin-top: 25px;
+}
+
+.cart-panel[hidden] {
+    display: none;
+}
+
+.cart-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity button, .remove-button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccd5cc;
+    border-radius: 5px;
+    background: white;
+}
+
+.remove-button {
+    color: #a22;
+}
+
+.cart-total {
+    text-align: right;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.checkout-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.checkout-form input, .checkout-form textarea {
+    padding: 12px;
+    border: 1px solid #ccd5cc;
+    border-radius: 7px;
+    font: inherit;
+    width: 100%;
+}
+
+.notice {
+    background: #fff4dc;
+    padding: 13px;
+    border-radius: 7px;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+@media (max-width: 950px) {
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        padding: 16px 5%;
+    }
+
+    nav {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        padding: 40px 5%;
+    }
+
+    .hero-art {
+        display: none;
+    }
+
+    .section {
+        padding: 30px 5%;
+    }
+
+    .products {
+        gap: 12px;
+    }
+
+    .product-art {
+        min-height: 115px;
+        font-size: 55px;
+    }
+
+    .product-info {
+        padding: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Nova<span>Store.</span></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <button class="cart-button" id="cartButton">
+            Cart (<span id="cartCount">0</span>)
+        </button>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <h1>Find your next<br>favourite thing.</h1>
+        <p>Discover everyday essentials at great prices.</p>
+        <a href="#products" class="cart-button"
+           style="display:inline-block;text-decoration:none">
+            Shop Now
+        </a>
+    </div>
+    <div class="hero-art">🛍️</div>
+</section>
+
+<section class="section" id="products">
+    <h2>Our Products</h2>
+    <p>Explore our collection and find something you love.</p>
+
+    <div class="controls">
+        <input type="search" id="searchInput"
+               placeholder="Search products...">
+
+        <select id="categoryFilter" aria-label="Filter by category">
+            <option value="All">All Categories</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Home">Home</option>
+        </select>
+    </div>
+
+    <div class="products" id="productList"></div>
+
+    <section class="cart-panel" id="cartPanel" hidden>
+        <h2>Your Shopping Cart</h2>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotal">Total: ₹0</div>
+
+        <button class="primary-button" id="checkoutButton">
+            Continue to Demo Checkout
+        </button>
+
+        <div class="notice">
+            Demo only: no real payment is accepted and no order is stored
+            on a server.
+        </div>
+
+        <form class="checkout-form" id="checkoutForm" hidden>
+            <h3>Demo Order Details</h3>
+
+            <label>
+                Name
+                <input id="customerName" type="text"
+                       maxlength="80" required>
+            </label>
+
+            <label>
+                Email
+                <input id="customerEmail" type="email"
+                       maxlength="120" required>
+            </label>
+
+            <button class="primary-button" type="submit">
+                Preview Demo Order
+            </button>
+        </form>
+
+        <p id="orderMessage" role="status" aria-live="polite"></p>
+    </section>
+</section>
+
+<section class="section" id="about">
+    <h2>About NovaStore</h2>
+    <p>
+        NovaStore is a sample online shopping website created using
+        HTML, CSS and JavaScript. Browse products and try the demo cart.
+    </p>
+</section>
+
+<footer>
+    <p>© 2026 NovaStore. Sample e-commerce project.</p>
+    <p>Built with HTML, CSS and JavaScript.</p>
+</footer>
+
+<script>
+const products = [
+    { id: 1, name: "Classic T-Shirt", category: "Fashion",
+      price: 499, emoji: "👕" },
+    { id: 2, name: "Running Shoes", category: "Fashion",
+      price: 1499, emoji: "👟" },
+    { id: 3, name: "Wireless Headphones", category: "Electronics",
+      price: 1999, emoji: "🎧" },
+    { id: 4, name: "Smart Watch", category: "Electronics",
+      price: 2499, emoji: "⌚" },
+    { id: 5, name: "Travel Backpack", category: "Accessories",
+      price: 899, emoji: "🎒" },
+    { id: 6, name: "Sunglasses", category: "Accessories",
+      price: 599, emoji: "🕶️" },
+    { id: 7, name: "Coffee Mug", category: "Home",
+      price: 299, emoji: "☕" },
+    { id: 8, name: "Desk Lamp", category: "Home",
+      price: 799, emoji: "💡" }
+];
+
+const cart = {};
+
+const productList = document.getElementById("productList");
+const cartPanel = document.getElementById("cartPanel");
+const cartItems = document.getElementById("cartItems");
+const cartTotal = document.getElementById("cartTotal");
+const cartCount = document.getElementById("cartCount");
+const checkoutForm = document.getElementById("checkoutForm");
+const orderMessage = document.getElementById("orderMessage");
+
+const money = amount =>
+    amount.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+    });
+
+function renderProducts() {
+    const search = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+    const category = document.getElementById("categoryFilter").value;
+
+    const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(search) &&
+        (category === "All" || product.category === category)
+    );
+
+    productList.innerHTML = "";
+
+    if (filtered.length === 0) {
+        productList.textContent = "No matching products found.";
+        return;
+    }
+
+    filtered.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product";
+
+        const art = document.createElement("div");
+        art.className = "product-art";
+        art.textContent = product.emoji;
+        art.setAttribute("aria-hidden", "true");
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const categoryText = document.createElement("span");
+        categoryText.className = "category";
+        categoryText.textContent = product.category;
+
+        const name = document.createElement("h3");
+        name.textContent = product.name;
+
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent = money(product.price);
+
+        const button = document.createElement("button");
+        button.className = "primary-button";
+        button.textContent = "Add to Cart";
+        button.addEventListener("click", () => addToCart(product.id));
+
+        info.append(categoryText, name, price, button);
+        card.append(art, info);
+        productList.appendChild(card);
+    });
+}
+
+function addToCart(id) {
+    cart[id] = (cart[id] || 0) + 1;
+    checkoutForm.hidden = true;
+    orderMessage.textContent = "";
+    renderCart();
+}
+
+function changeQuantity(id, amount) {
+    cart[id] = (cart[id] || 0) + amount;
+
+    if (cart[id] <= 0) {
+        delete cart[id];
+    }
+
+    checkoutForm.hidden = true;
+    orderMessage.textContent = "";
+    renderCart();
+}
+
+function removeFromCart(id) {
+    delete cart[id];
+    checkoutForm.hidden = true;
+    orderMessage.textContent = "";
+    renderCart();
+}
+
+function renderCart() {
+    cartItems.innerHTML = "";
+
+    let count = 0;
+    let total = 0;
+
+    products.forEach(product => {
+        const quantity = cart[product.id] || 0;
+
+        if (!quantity) return;
+
+        count += quantity;
+        total += product.price * quantity;
+
+        const row = document.createElement("div");
+        row.className = "cart-row";
+
+        const name = document.createElement("span");
+        name.textContent = product.name + " — " + money(product.price);
+
+        const quantityBox = document.createElement("div");
+        quantityBox.className = "quantity";
+
+        const minus = document.createElement("button");
+        minus.textContent = "−";
+        minus.setAttribute("aria-label", "Decrease quantity");
+        minus.addEventListener("click", () =>
+            changeQuantity(product.id, -1));
+
+        const number = document.createElement("span");
+        number.textContent = quantity;
+
+        const plus = document.createElement("button");
+        plus.textContent = "+";
+        plus.setAttribute("aria-label", "Increase quantity");
+        plus.addEventListener("click", () =>
+            changeQuantity(product.id, 1));
+
+        const remove = document.createElement("button");
+        remove.className = "remove-button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () =>
+            removeFromCart(product.id));
+
+        quantityBox.append(minus, number, plus, remove);
+        row.append(name, quantityBox);
+        cartItems.appendChild(row);
+    });
+
+    cartCount.textContent = count;
+    cartTotal.textContent = "Total: " + money(total);
+
+    if (count === 0) {
+        const empty = document.createElement("p");
+        empty.textContent = "Your cart is empty. Add a product to begin.";
+        cartItems.appendChild(empty);
+        checkoutForm.hidden = true;
+    }
+}
+
+document.getElementById("searchInput")
+    .addEventListener("input", renderProducts);
+
+document.getElementById("categoryFilter")
+    .addEventListener("change", renderProducts);
+
+document.getElementById("cartButton")
+    .addEventListener("click", () => {
+        cartPanel.hidden = false;
+        cartPanel.scrollIntoView({ behavior: "smooth" });
+    });
+
+document.getElementById("checkoutButton")
+    .addEventListener("click", () => {
+        if (Object.keys(cart).length === 0) {
+            orderMessage.textContent =
+                "Please add a product before checkout.";
+            return;
+        }
+
+        checkoutForm.hidden = false;
+        orderMessage.textContent =
+            "Enter demo details to preview your order.";
+    });
+
+checkoutForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = document.getElementById("customerName")
+        .value.trim();
+
+    const email = document.getElementById("customerEmail")
+        .value.trim();
+
+    if (!name || !email || Object.keys(cart).length === 0) {
+        orderMessage.textContent =
+            "Please enter valid details and add a product.";
+        return;
+    }
+
+    let summary = "Demo order for " + name + " (" + email + "):\n";
+
+    products.forEach(product => {
+        const quantity = cart[product.id] || 0;
+
+        if (quantity > 0) {
+            summary += product.name + " × " + quantity + "\n";
+        }
+    });
+
+    const total = products.reduce((sum, product) =>
+        sum + product.price * (cart[product.id] || 0), 0);
+
+    summary += "Total: " + money(total);
+    summary += "\n\nThis is only a preview. No order was placed.";
+
+    orderMessage.textContent = summary;
+});
+
+renderProducts();
+renderCart();
+</script>
+
+</body>
+</html>
